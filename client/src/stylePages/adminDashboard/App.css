@@ -1,0 +1,6 @@
+form .chakra-form-control .ant-form-item .ant-row{
+    justify-content: center;
+}
+form .chakra-form-control label{
+    text-align: center;
+}
