@@ -70,7 +70,6 @@ const RoomBooking = () => {
       setLoading(false)
     } catch (error) {
       console.log(error);
-      // setLoading()
     }
   };
 
