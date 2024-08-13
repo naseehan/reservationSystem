@@ -15,8 +15,10 @@ const EachDay = require("./models/eachDay");
 const BookedRoom = require("./models/bookedRooms")
 connectDB();
 
-app.use(bodyParser.json());
+// used to parse JSON-formatted request bodies.
+// app.use(bodyParser.json());
 
+// restricts web pages from making requests to a different domain
 const cors = require("cors");
 
 // allows to specify who can make requests to server
@@ -42,9 +44,8 @@ app.get("/getRooms", async (req, res) => {
     const rooms = await Room.find();
 
     const roomsWithStatus = rooms.map((room) => {
-      const availability = room.availability.find((a) => a.date === date) || {
-        status: "Available",
-      };
+      const availability = room.availability.find((a) => a.date === date) || { status: "Available", };
+      // console.log(availability);
       return {
         id: room.id,
         name: room.name,

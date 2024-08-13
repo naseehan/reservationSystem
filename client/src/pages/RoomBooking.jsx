@@ -6,6 +6,7 @@ import axios from "axios";
 import OpenModal from "../components/OpenModal";
 import { useDisclosure } from "@chakra-ui/react";
 import Loader from "../components/Loader";
+import { useToast } from "@chakra-ui/react";
 
 const Tags = styled.div`
   position: absolute;
@@ -47,7 +48,9 @@ const Booked = styled.div`
 `;
 
 const RoomBooking = () => {
+  // get todays date in YYYY-MM-DD fo
   const today = new Date().toISOString().split("T")[0];
+  const toast = useToast();
 
   const [date, setDate] = useState(today);
   const [rooms, setRooms] = useState([]);
@@ -55,6 +58,7 @@ const RoomBooking = () => {
   const [bookWindow, setBookWindow] = useState(false);
   const [selectedRoomId, setSelectedRoomId] = useState();
   const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchRooms = async (date) => {
@@ -69,7 +73,16 @@ const RoomBooking = () => {
       setRooms(response.data);
       setLoading(false)
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "Error getting room details",
+        description: error.response
+          ? error.response.data.message
+          : error.message,
+        status: "error",
+        isClosable: true,
+        position: "top-right",
+      });
+
     }
   };
 
